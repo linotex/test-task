@@ -1,0 +1,52 @@
+version: '2'
+services:  
+  mysql_m:
+    build:
+      context: docker/mysql
+      dockerfile: Dockerfile
+    ports:
+      - "3308:3306"
+    container_name: mysql_m
+    env_file:
+      - docker/env.env
+    volumes:
+      - /var/docker_mysql_m:/var/lib/mysql
+  phpfpm_m:
+    build:
+      context: docker/phpfpm
+      dockerfile: Dockerfile
+    links:
+      - mysql_m
+    ports:
+      - "9003:9000"
+    container_name: phpfpm_m
+    env_file:
+      - docker/env.env
+    volumes:
+      - ./:/var/www
+  nginx_m:
+    build:
+      context: docker/nginx
+      dockerfile: Dockerfile
+    links:
+      - phpfpm_m
+    ports:
+      - "83:80"
+    container_name: nginx_m
+    env_file:
+      - docker/env.env
+    volumes:
+      - ./:/var/www
+  swagger_m:
+    build:
+      context: docker/swagger
+      dockerfile: Dockerfile
+    links:
+      - nginx_m
+    ports:
+      - "84:8080"
+    container_name: swagger_m
+    env_file:
+      - docker/env.env
+    volumes:
+      - ./public/swagger.json:/swagger.json

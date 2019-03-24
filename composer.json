@@ -1,0 +1,41 @@
+{
+    "name": "School",
+    "description": "",
+    "type": "project",
+    "license": "GPL",
+    "keywords": [],
+    "homepage": "http://localhost:83/",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.0",
+        "zendframework/zend-mvc": "^3.0.1",
+        "doctrine/doctrine-orm-module": "^2.1",
+        "doctrine/doctrine-migrations-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Application\\": "module/Application/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ApplicationTest\\": "module/Application/test/"
+        }
+    },
+    "extra": [],
+    "scripts": {
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "development-disable": "zf-development-mode disable",
+        "development-enable": "zf-development-mode enable",
+        "development-status": "zf-development-mode status",
+        "post-create-project-cmd": [
+            "@development-enable"
+        ],
+        "test": "phpunit"
+    },
+    "require-dev": {
+        "zendframework/zend-test": "^3.2"
+    }
+}
